@@ -1,4 +1,15 @@
 <p>Show View </p>
 <h1><%= @todo_item.content %></h1>
+<h4>Erledigen bis: 	<% if @todo_item.duedate.nil? %>
+						<i>Kein Enddatum definiert </i>
+						<% else @todo_item.duedate end %> </h4> <!-- 1 Stunde für diese MEthode die dann Sinnlos war: flash[notice: "Kein Enddatum definiert"] -->
+<p>Abgeschlossen am: <% if @todo_item.completed_at.nil? %>
+					<i>Aufgabe noch nicht abgeschlossen</i>
+					<% else %>
+					<%= @todo_item.completed_at %> 
+					<%end %>
+</p>
+<p>Erstellt am: <%= @todo_item.created_at %></p>
 
 <%= link_to 'Back', todo_list_path(@todo_list.id) %>
+

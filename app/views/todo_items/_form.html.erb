@@ -1,4 +1,27 @@
 <%= form_for([@todo_list, @todo_list.todo_items.build]) do |f| %>
 	<%= f.text_field :content, placeholder: "New Todo" %>
 	<%= f.submit %>
+
+
+
+
 <% end %>
+
+<%= form_for([@todo_list, @todo_list.todo_items.build]) do |f| %>
+
+
+	    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :content => nil %>
+
+
+
+
+<% end %>
+<div>
+<% form_tag @todo_list_todo_item_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+</div>

@@ -4,8 +4,12 @@ Rails.application.routes.draw do
 
   resources :todo_lists do
   	resources :todo_items do
+  		collection do
+  				match 'search' => "todo_items#search", via: [:get, :post], as: :search
+  			end
   		member do 
   			patch :complete
+
   		end
   	end
 end 

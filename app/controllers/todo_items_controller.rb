@@ -4,7 +4,6 @@ class TodoItemsController < ApplicationController
 
 	def create
 		@todo_item = @todo_list.todo_items.create(todo_item_params)
-
 		if @todo_item.save
 			redirect_to @todo_list
 		else 
@@ -35,10 +34,29 @@ class TodoItemsController < ApplicationController
 		end 
 	end
 
-	def show
-    	@todo_item = TodoItem.find(params[:id])
-  	end
 
+
+	def index
+	  @todo_item = TodoItem.search(params[:search])
+	end
+
+
+
+=begin
+	def show 
+		@search = TodoItem.ransack(params[:search])
+		@todo_list_todo_item = @search.result ransack
+
+    	@todo_item = TodoItem.find(params[:id]) Ursprünglich
+  	end 
+
+=end	
+
+  	def search
+  		index
+
+  		render :show
+  	end 
 
 
 	private
@@ -54,4 +72,9 @@ class TodoItemsController < ApplicationController
 	def todo_item_params
 		params[:todo_item].permit(:content)
 	end
+=begin
+	def todo_item_params
+		params[:todo_item]
+	end
+=end
 end
