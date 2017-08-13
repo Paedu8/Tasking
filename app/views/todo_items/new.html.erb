@@ -1,0 +1,19 @@
+<p>New TodoList-Item erfassen </p>
+
+
+<div class="forms">
+
+<%= form_for([@todo_list, @todo_list.todo_items.build]) do |f| %>
+	<%= f.hidden_field :id, :value => @todo_list.id %>
+	<%= f.text_field :content, placeholder: "New Todo" %>
+	<%= f.date_field :duedate, placeholder: "DatumTest" %>
+
+
+	
+
+	<%= f.submit "Erstellen" %>
+	<% end %>
+
+</div>
+
+<%= link_to 'Back', todo_list_path(@todo_list.id) %>

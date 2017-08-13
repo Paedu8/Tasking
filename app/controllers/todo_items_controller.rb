@@ -1,15 +1,49 @@
 class TodoItemsController < ApplicationController
 	before_action :set_todo_list
-	before_action :set_todo_item, except: [:create]
+	before_action :set_todo_item, except: [:create, :new, :overdue]
 
 	def create
-		@todo_item = @todo_list.todo_items.create(todo_item_params)
+		@todo_list = TodoList.find(params[:todo_list_id])
+
+		@todo_item = @todo_list.todo_items.new(todo_item_params)
+
+=begin
+		if @todo_item.duedate.nil? == true
+			@todo_item.duedate = Time.now
+		end
+=end
+		@todo_item.save!
+		
+		if redirect_to @todo_list
+
+		else
+			redirect_to @todo_item, notice: "Create a new Todo was not possible"
+		end		 
+
+=begin
+    @todo_item = todo_list.todo_item.create(todo_item_params)
+    	if @todo_list.save
+    		format.html { redirect_to @todo_item, notice: 'Todo Item was successfully created.' }
+        	format.json { render :show, status: :created, location: @todo_item}
+        else
+        	redirect_to @todo_item, notice: "Create a new Todo was not possible"
+        end
+  	end
+		
+ 	
+
+		@todo_item = @todo_list.todo_items.build(todo_item_params)
+
 		if @todo_item.save
 			redirect_to @todo_list
 		else 
 			redirect_to @todo_item, notice: "Create a new Todo was not possible"
 		end
-	end
+=end
+end
+		
+
+
 
 	def destroy
 		
@@ -34,6 +68,11 @@ class TodoItemsController < ApplicationController
 		end 
 	end
 
+
+ 	def new
+    	@todo_item = current_user.todo_lists.build
+    	@todo_item.id = params[:id]
+  	end
 
 
 	def index
@@ -66,15 +105,21 @@ class TodoItemsController < ApplicationController
 	end
 
 	def set_todo_item
+
 		@todo_item = @todo_list.todo_items.find(params[:id])
+
 	end
 
+
 	def todo_item_params
-		params[:todo_item].permit(:content)
+		params[:todo_item].permit(:content, :duedate)
 	end
+	
 =begin
 	def todo_item_params
 		params[:todo_item]
 	end
 =end
+
 end
+

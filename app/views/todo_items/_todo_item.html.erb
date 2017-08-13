@@ -24,7 +24,12 @@
 		</div>
 		<div class="todo_item">
 			<%= link_to todo_list_todo_item_path(@todo_list, todo_item.id), method: :get do %> 
-			<p><%= todo_item.content %></p> 
+
+			<% if todo_item.duedate.nil? && todo_item.duedate <= Date.today %>
+				<h3><font color= 'red'><p><%= todo_item.content %></p> </font> </h3>
+			<% else %>
+				<p><%= todo_item.content %></p>
+			<% end %>
 		</div>
 		<div class="trash">
 			<%= link_to todo_list_todo_item_path(@todo_list, todo_item.id), method: :delete, data: {confirm: "Are you fucking sure"} do %>
