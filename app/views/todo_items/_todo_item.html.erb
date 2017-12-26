@@ -25,7 +25,7 @@
 		<div class="todo_item">
 			<%= link_to todo_list_todo_item_path(@todo_list, todo_item.id), method: :get do %> 
 
-			<% if todo_item.duedate.nil? && todo_item.duedate <= Date.today %>
+			<% if todo_item.duedate.present? && todo_item.duedate.past? %>
 				<h3><font color= 'red'><p><%= todo_item.content %></p> </font> </h3>
 			<% else %>
 				<p><%= todo_item.content %></p>
